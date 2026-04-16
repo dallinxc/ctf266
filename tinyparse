@@ -1,0 +1,8 @@
+CC      = gcc
+CFLAGS  = -O0 -g -fno-stack-protector -no-pie -Wno-deprecated-declarations
+
+tinyparse: tinyparse.c
+	$(CC) $(CFLAGS) -o tinyparse tinyparse.c
+
+clean:
+	rm -f tinyparse

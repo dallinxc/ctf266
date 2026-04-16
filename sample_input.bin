@@ -1,0 +1,10 @@
+CC      = gcc
+CFLAGS  = -O0 -g -fno-stack-protector -no-pie -Wno-deprecated-declarations
+
+station: station.c
+	$(CC) $(CFLAGS) -o station station.c
+	@# strip debug/symbol info so students have to actually do the work
+	strip station
+
+clean:
+	rm -f station

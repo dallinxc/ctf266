@@ -1,0 +1,54 @@
+# CTF: Mutation Station
+
+> **Category:** Rev/Pwn
+> **Attack Pattern:** [CAPEC-28: Fuzzing](https://capec.mitre.org/data/definitions/28.html)
+> **Flag format:** `itc266{...}`
+> **Estimated time:** 20–40 minutes after completing the walkthrough
+
+---
+
+## Story
+
+A sloppy intern at a fictional IoT company shipped a record-processing utility called `station` with their device firmware. Their QA department tested "normal" inputs and declared it safe. Your job is to prove them wrong.
+
+The binary accepts a single positional argument — the path to an input file. Records follow a rigid little binary protocol. Surface inspection will tell you what shape the envelope has to be; finding the bug means fuzzing *inside* that envelope until the processor breaks. When it breaks, it confesses.
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `station` | The target binary (Linux x86-64, stripped) |
+| `sample_input.bin` | A valid record — a known-good seed for mutation |
+| `Makefile` | For rebuilding if you want to (you probably don't need to) |
+| `station.c` | **Do not read this until you've solved it.** Source is included for grading; peeking is self-defeating. |
+
+## Rules of Engagement
+
+1. You must trigger the flag using **fuzzing**. Reverse-engineering the binary to extract the flag statically defeats the purpose of the exercise.
+2. You may use any mutation or generation fuzzer (radamsa, Python, boofuzz, AFL++ — all fine).
+3. The flag prints to stdout when the right thing happens. You'll know it when you see it.
+
+## Getting Started
+
+```bash
+# Make sure the binary runs at all
+./station sample_input.bin
+# → accepted record (15 bytes)
+
+# Try something obviously wrong
+echo "random junk" > bad.bin
+./station bad.bin
+# → rejected: bad magic
+
+# Now think. What did that error tell you?
+```
+
+## If You're Stuck
+
+Hints live in `hints.md`, ordered from gentlest to most direct. Read them one at a time — don't binge the whole file.
+
+## When You Get The Flag
+
+Paste it into whatever your class submission platform is. Then read `../solution/WRITEUP.md` to see the intended path and compare notes.
+
+Good hunting.
